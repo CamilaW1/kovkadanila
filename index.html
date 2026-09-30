@@ -569,7 +569,7 @@
       <div class="modal-head">
         <div>
           <h3 id="orderTitle">Заказать расчет</h3>
-          <p>Оставьте данные — заявка подготовится для отправки на email.</p>
+          <p>Оставьте имя и email или телефон — заявка придет нам на почту.</p>
         </div>
         <button class="close" id="closeModal" aria-label="Закрыть">×</button>
       </div>
@@ -585,18 +585,31 @@
           </a>
         </div>
 
-        <form id="orderForm" class="form-grid">
+        <form id="orderForm" class="form-grid" action="https://formsubmit.co/danilakuzn@mail.ru" method="POST">
+          <input type="hidden" name="_subject" value="Новая заявка с сайта Ковка Данила" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" id="estimatedPrice" name="Предварительная оценка" value="" />
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
           <div class="field">
             <label for="name">Ваше имя</label>
-            <input id="name" name="name" required placeholder="Имя" />
+            <input id="name" name="Имя" required autocomplete="name" placeholder="Имя" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="Email" type="email" autocomplete="email" placeholder="example@mail.ru" />
           </div>
           <div class="field">
             <label for="phone">Телефон</label>
-            <input id="phone" name="phone" required placeholder="+7 ..." />
+            <input id="phone" name="Телефон" type="tel" autocomplete="tel" placeholder="+7 ..." />
+          </div>
+          <div class="field">
+            <label>Как с вами связаться</label>
+            <div style="min-height:48px;display:flex;align-items:center;color:#d8d2c7;font-size:14px;">Укажите email или телефон — достаточно одного.</div>
           </div>
           <div class="field full">
             <label for="orderProduct">Что нужно</label>
-            <select id="orderProduct" name="product">
+            <select id="orderProduct" name="Изделие">
               <option>Навес</option>
               <option>Решетки на окна</option>
               <option>Перила</option>
@@ -605,11 +618,12 @@
             </select>
           </div>
           <div class="field full">
-            <label for="details">Комментарий</label>
-            <input id="details" name="details" placeholder="Размеры, адрес, пожелания" />
+            <label for="details">Сообщение</label>
+            <textarea id="details" name="Сообщение" rows="4" placeholder="Размеры, адрес, пожелания или ваш вопрос"></textarea>
           </div>
           <div class="field full">
-            <button class="btn btn-primary" type="submit">Отправить заявку на email</button>
+            <div id="contactError" style="display:none;color:#ffb7a8;margin-bottom:10px;font-size:14px;">Пожалуйста, укажите email или телефон для обратной связи.</div>
+            <button class="btn btn-primary" type="submit">Отправить заявку</button>
           </div>
         </form>
       </div>
@@ -665,22 +679,30 @@
     modal.addEventListener('click', e => { if (e.target === modal) closeOrderModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOrderModal(); });
 
-    document.getElementById('orderForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const item = document.getElementById('orderProduct').value;
-      const details = document.getElementById('details').value.trim();
-      const subject = encodeURIComponent('Заявка с сайта danilakuzn — ' + item);
-      const body = encodeURIComponent(
-        'Новая заявка с сайта Ковка Данила\n\n' +
-        'Имя: ' + name + '\n' +
-        'Телефон: ' + phone + '\n' +
-        'Изделие: ' + item + '\n' +
-        'Комментарий: ' + (details || 'не указан') + '\n\n' +
-        'Предварительная оценка на сайте: ' + price.textContent
-      );
-      window.location.href = 'mailto:danilakuzn@mail.ru?subject=' + subject + '&body=' + body;
+    const orderForm = document.getElementById('orderForm');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const contactError = document.getElementById('contactError');
+    const estimatedPrice = document.getElementById('estimatedPrice');
+
+    function validateContact() {
+      const hasEmail = emailInput.value.trim() !== '';
+      const hasPhone = phoneInput.value.trim() !== '';
+      const valid = hasEmail || hasPhone;
+      contactError.style.display = valid ? 'none' : 'block';
+      return valid;
+    }
+
+    emailInput.addEventListener('input', validateContact);
+    phoneInput.addEventListener('input', validateContact);
+
+    orderForm.addEventListener('submit', e => {
+      if (!validateContact()) {
+        e.preventDefault();
+        (emailInput.value.trim() === '' ? emailInput : phoneInput).focus();
+        return;
+      }
+      estimatedPrice.value = price.textContent;
     });
 
     document.getElementById('year').textContent = new Date().getFullYear();
