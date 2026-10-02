@@ -1,22 +1,14 @@
-КОВКА ДАНИЛА — DANILAKUZN
+# kovkadanila.com
 
-Файлы сайта:
-- index.html — весь сайт в одном файле (HTML + CSS + JavaScript)
+Classic static website structure:
 
-Как открыть:
-1. Откройте index.html двойным кликом в браузере.
-2. Для публикации загрузите index.html на любой хостинг или Vercel/Netlify.
+- `index.html` — page markup
+- `css/style.css` — all styles
+- `js/script.js` — calculator, modal, gallery filters and lightbox
+- `photos/` — website photos grouped by type
+- `CNAME` — custom domain for GitHub Pages / Cloudflare Pages
 
-Контакты на сайте:
-Телефон: +7 925 208-80-07
-Email: danilakuzn@mail.ru
-Регион: Москва и Московская область
+Photo file names were kept exactly as previously prepared:
+`canopy-01.jpg`, `gate-01.jpg`, `railing-01.jpg`, etc.
 
-Важно про калькулятор:
-В текущей версии используются предварительные демонстрационные ставки по типам изделий.
-Перед реальной публикацией их лучше заменить на ваши фактические базовые цены.
-Текущие ставки находятся в нижней части index.html в объекте priceRates.
-
-Форма заказа:
-После заполнения открывает почтовую программу клиента и подготавливает письмо на danilakuzn@mail.ru.
-Для полностью автоматической отправки без открытия почтовой программы понадобится подключить backend или сервис форм.
+To test locally, open `index.html` in a browser or use the IDE built-in web preview/server.
