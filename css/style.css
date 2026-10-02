@@ -523,3 +523,585 @@
   .lightbox-next { right: calc(50% - 54px); }
 }
 
+
+
+/* =========================================================
+   Responsive / adaptive layout
+   Desktop, tablet and mobile
+   ========================================================= */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 88px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 112px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #0f1113;
+  color: var(--text);
+  padding: 13px 14px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: rgba(213,155,85,.62);
+  box-shadow: 0 0 0 3px rgba(213,155,85,.08);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-toggle {
+  display: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #181b1f;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--text);
+}
+
+.menu-toggle span {
+  width: 20px;
+  height: 2px;
+  border-radius: 99px;
+  background: currentColor;
+  transition: transform .2s ease, opacity .2s ease;
+}
+
+.menu-toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-menu {
+  display: none;
+  border-top: 1px solid var(--line);
+  background: rgba(14,16,18,.97);
+  box-shadow: 0 18px 40px rgba(0,0,0,.22);
+}
+
+.mobile-menu.open {
+  display: block;
+}
+
+.mobile-menu-inner {
+  display: grid;
+  padding-top: 10px;
+  padding-bottom: 14px;
+}
+
+.mobile-menu a {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,.065);
+  color: #e6e0d7;
+  font-weight: 650;
+}
+
+.mobile-menu a:last-child {
+  border-bottom: 0;
+}
+
+.mobile-menu .mobile-phone {
+  color: var(--accent-2);
+}
+
+@media (max-width: 1180px) {
+  .hero-grid {
+    gap: 40px;
+    grid-template-columns: 1.05fr .95fr;
+  }
+
+  .nav-links {
+    gap: 18px;
+  }
+
+  .services,
+  .portfolio-grid {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 980px) {
+  .nav-links {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding: 66px 0 74px;
+  }
+
+  .hero-grid > div:first-child {
+    max-width: 760px;
+  }
+
+  .hero-photo-card,
+  .hero-photo {
+    min-height: 0;
+    height: clamp(360px, 58vw, 520px);
+  }
+
+  .services {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .advantages,
+  .calculator-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cta-box {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 720px) {
+  .wrap {
+    width: min(100% - 28px, 1180px);
+  }
+
+  header {
+    backdrop-filter: blur(12px);
+  }
+
+  .nav {
+    min-height: 66px;
+    gap: 10px;
+  }
+
+  .brand {
+    min-width: 0;
+    gap: 9px;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text span {
+    display: none;
+  }
+
+  .brand-text strong {
+    font-size: 14px;
+  }
+
+  .nav-cta {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .menu-toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  h1 {
+    font-size: clamp(40px, 12vw, 58px);
+    line-height: 1;
+  }
+
+  h2 {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+
+  .hero-grid {
+    padding: 52px 0 62px;
+    gap: 30px;
+  }
+
+  .hero-copy {
+    margin-top: 18px;
+    font-size: 16px;
+  }
+
+  .hero-actions {
+    margin-top: 24px;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 220px;
+  }
+
+  .hero-meta {
+    margin-top: 26px;
+    gap: 12px 18px;
+  }
+
+  .hero-photo-card,
+  .hero-photo {
+    height: clamp(300px, 72vw, 410px);
+    border-radius: 22px;
+  }
+
+  .forge-label {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    padding: 14px;
+  }
+
+  .forge-label strong {
+    font-size: 17px;
+  }
+
+  .forge-label b {
+    display: none;
+  }
+
+  section {
+    padding: 64px 0;
+  }
+
+  .section-head {
+    margin-bottom: 26px;
+  }
+
+  .services {
+    grid-template-columns: 1fr;
+  }
+
+  .service {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .service h3 {
+    margin: 26px 0 8px;
+  }
+
+  .advantages {
+    padding: 20px;
+  }
+
+  .advantages .intro {
+    padding: 0;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat {
+    padding: 16px;
+  }
+
+  .stat strong {
+    font-size: 25px;
+  }
+
+  .portfolio-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-right: -14px;
+    margin-left: -14px;
+    padding: 0 14px 7px;
+    scrollbar-width: none;
+  }
+
+  .portfolio-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .portfolio-filter {
+    flex: 0 0 auto;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-item {
+    min-height: 0;
+  }
+
+  .portfolio-item img {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .calc-copy,
+  .calculator {
+    padding: 21px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field.full {
+    grid-column: auto;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .result {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .result .btn {
+    width: 100%;
+  }
+
+  .cta-box {
+    grid-template-columns: 1fr;
+    padding: 25px;
+  }
+
+  .cta-box .btn {
+    width: 100%;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal {
+    align-items: flex-end;
+    padding: 12px;
+  }
+
+  .modal-card {
+    width: 100%;
+    max-height: calc(100dvh - 24px);
+    border-radius: 22px;
+  }
+
+  .modal-head {
+    padding: 20px 18px 10px;
+  }
+
+  .modal-head h3 {
+    font-size: 24px;
+  }
+
+  .modal-body {
+    padding: 10px 18px calc(22px + env(safe-area-inset-bottom));
+  }
+
+  .contact-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-order {
+    left: 14px;
+    right: 14px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: calc(100% - 28px);
+    min-height: 50px;
+  }
+
+  footer {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+  }
+
+  .lightbox {
+    padding: 68px 12px 76px;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: calc(100dvh - 150px);
+    border-radius: 12px;
+  }
+
+  .lightbox-arrow {
+    top: auto;
+    bottom: 14px;
+    transform: none;
+    width: 48px;
+    height: 48px;
+  }
+
+  .lightbox-prev {
+    left: calc(50% - 56px);
+  }
+
+  .lightbox-next {
+    right: calc(50% - 56px);
+  }
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    width: min(100% - 22px, 1180px);
+  }
+
+  .nav-cta {
+    font-size: 0;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+  }
+
+  .nav-cta::before {
+    content: "✦";
+    font-size: 18px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  h1 {
+    font-size: clamp(38px, 12.5vw, 50px);
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .hero-meta {
+    display: grid;
+    gap: 9px;
+  }
+
+  .hero-photo-card,
+  .hero-photo {
+    height: 290px;
+  }
+
+  section {
+    padding: 56px 0;
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-caption {
+    left: 9px;
+    bottom: 9px;
+  }
+
+  .cta-box {
+    padding: 22px;
+  }
+
+  .floating-order {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-text strong {
+    font-size: 13px;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-actions {
+    gap: 6px;
+  }
+
+  .menu-toggle,
+  .nav-cta {
+    width: 40px;
+    height: 40px;
+  }
+
+  .forge-label small {
+    display: none;
+  }
+
+  .forge-label strong {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
