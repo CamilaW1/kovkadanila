@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Ковка Данила — кованые изделия на заказ в Москве и МО</title>
   <meta name="description" content="Кованые навесы, решетки на окна, перила и беседки на заказ в Москве и Московской области. Ковка Данила — 20 лет на рынке, гарантия качества и низкие цены." />
   <meta name="theme-color" content="#111214" />
@@ -26,8 +26,29 @@
         <a href="#calculator">Оценка стоимости</a>
         <a href="#contacts">Контакты</a>
       </nav>
-      <button class="nav-cta" data-open-order>Заказать сейчас</button>
+      <div class="nav-actions">
+        <button class="nav-cta" data-open-order>Заказать сейчас</button>
+        <button class="menu-toggle" id="menuToggle" type="button"
+                aria-label="Открыть меню"
+                aria-controls="mobileMenu"
+                aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
+
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Мобильное меню">
+      <div class="wrap mobile-menu-inner">
+        <a href="#services">Изделия</a>
+        <a href="#advantages">Почему мы</a>
+        <a href="#works">Наши работы</a>
+        <a href="#calculator">Оценка стоимости</a>
+        <a href="#contacts">Контакты</a>
+        <a class="mobile-phone" href="tel:+79252088007">+7 925 208-80-07</a>
+      </div>
+    </nav>
   </header>
 
   <main id="top">
