@@ -184,3 +184,91 @@ if (menuToggle && mobileMenu) {
     }
   });
 }
+
+
+// Hero automatic slideshow
+const heroPhotoCard = document.querySelector('.hero-photo-card');
+const firstHeroPhoto = heroPhotoCard?.querySelector('.hero-photo');
+
+if (heroPhotoCard && firstHeroPhoto) {
+  const heroImages = [
+    {
+      src: firstHeroPhoto.getAttribute('src'),
+      alt: firstHeroPhoto.getAttribute('alt') || 'Кованые изделия — работа Ковка Данила'
+    },
+    {
+      src: 'photos/01-canopies/garden-canopy.jpg',
+      alt: 'Кованый навес во дворе — работа Ковка Данила'
+    },
+    {
+      src: 'photos/05-railings/porch-railing.jpg',
+      alt: 'Кованые перила — работа Ковка Данила'
+    },
+    {
+      src: 'photos/01-canopies/canopy-01.jpg',
+      alt: 'Кованый навес зимой — работа Ковка Данила'
+    },
+    {
+      src: 'photos/03-gates/gate-03.jpg',
+      alt: 'Кованые ворота — работа Ковка Данила'
+    },
+    {
+      src: 'photos/04-fences/ornamental-fence.jpg',
+      alt: 'Кованое ограждение — работа Ковка Данила'
+    }
+  ];
+
+  const heroSliderStyle = document.createElement('style');
+  heroSliderStyle.textContent = `
+    .hero-photo-card .hero-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity .9s ease;
+      z-index: 0;
+      will-change: opacity;
+    }
+
+    .hero-photo-card .hero-slide.is-active {
+      opacity: 1;
+    }
+
+    .hero-photo-card::after {
+      z-index: 1;
+    }
+
+    .hero-photo-card .forge-label {
+      z-index: 2;
+    }
+  `;
+  document.head.appendChild(heroSliderStyle);
+
+  firstHeroPhoto.classList.add('hero-slide', 'is-active');
+
+  heroImages.slice(1).forEach(imageData => {
+    const image = document.createElement('img');
+    image.src = imageData.src;
+    image.alt = imageData.alt;
+    image.className = 'hero-photo hero-slide';
+    image.decoding = 'async';
+    heroPhotoCard.insertBefore(image, heroPhotoCard.querySelector('.forge-label'));
+  });
+
+  const heroSlides = Array.from(heroPhotoCard.querySelectorAll('.hero-slide'));
+  let currentHeroSlide = 0;
+
+  function showHeroSlide(index) {
+    heroSlides[currentHeroSlide].classList.remove('is-active');
+    currentHeroSlide = index;
+    heroSlides[currentHeroSlide].classList.add('is-active');
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      showHeroSlide((currentHeroSlide + 1) % heroSlides.length);
+    }, 5000);
+  }
+}
