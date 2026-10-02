@@ -1636,3 +1636,72 @@ footer {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* Photo service cards */
+.service {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  isolation: isolate;
+  transition: transform .25s ease, border-color .25s ease;
+}
+
+.service::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(8,10,12,.20) 0%, rgba(8,10,12,.48) 42%, rgba(8,10,12,.90) 100%);
+}
+
+.service::after {
+  display: none;
+}
+
+.service > * {
+  position: relative;
+  z-index: 1;
+}
+
+.service-icon {
+  background: rgba(18,16,13,.62);
+  border-color: rgba(242,201,141,.58);
+  box-shadow: 0 6px 18px rgba(0,0,0,.20);
+  backdrop-filter: blur(7px);
+}
+
+.service h3 {
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0,0,0,.58);
+}
+
+.service p {
+  color: rgba(255,255,255,.84);
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+}
+
+.service-canopy {
+  background-image: url("../photos/01-canopies/garden-canopy.jpg");
+}
+
+.service-fence {
+  background-image: url("../photos/04-fences/ornamental-fence.jpg");
+}
+
+.service-railing {
+  background-image: url("../photos/05-railings/garden-railing.jpg");
+}
+
+.service-gazebo {
+  background-image: url("../photos/01-canopies/canopy-09.jpg");
+}
+
+@media (hover: hover) {
+  .service:hover {
+    transform: translateY(-3px);
+    border-color: rgba(242,201,141,.42);
+  }
+}
