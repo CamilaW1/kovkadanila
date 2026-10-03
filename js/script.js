@@ -77,18 +77,30 @@ const priceRates = {
 // Portfolio filters
 const portfolioFilters = document.querySelectorAll('.portfolio-filter');
 const portfolioItems = Array.from(document.querySelectorAll('.portfolio-item'));
+const portfolioCollage = document.getElementById('portfolioAllCollage');
+let activePortfolioFilter = 'all';
+
+function applyPortfolioFilter(filter) {
+  activePortfolioFilter = filter;
+
+  if (portfolioCollage) {
+    portfolioCollage.hidden = filter !== 'all';
+  }
+
+  portfolioItems.forEach(item => {
+    item.hidden = filter === 'all' || item.dataset.category !== filter;
+  });
+}
 
 portfolioFilters.forEach(button => {
   button.addEventListener('click', () => {
     portfolioFilters.forEach(item => item.classList.remove('active'));
     button.classList.add('active');
-
-    const filter = button.dataset.filter;
-    portfolioItems.forEach(item => {
-      item.hidden = filter !== 'all' && item.dataset.category !== filter;
-    });
+    applyPortfolioFilter(button.dataset.filter);
   });
 });
+
+applyPortfolioFilter('all');
 
 // Portfolio lightbox
 const lightbox = document.getElementById('lightbox');
@@ -96,27 +108,27 @@ const lightboxImage = document.getElementById('lightboxImage');
 const lightboxClose = document.getElementById('lightboxClose');
 const lightboxPrev = document.getElementById('lightboxPrev');
 const lightboxNext = document.getElementById('lightboxNext');
-let currentPortfolioIndex = 0;
 
-function visiblePortfolioItems() {
-  return portfolioItems.filter(item => !item.hidden);
-}
+let currentPortfolioIndex = 0;
+let lightboxItems = [];
+let touchStartX = null;
 
 function showPortfolioImage(index) {
-  const items = visiblePortfolioItems();
-  if (!items.length) return;
+  if (!lightboxItems.length) return;
 
-  currentPortfolioIndex = (index + items.length) % items.length;
-  const item = items[currentPortfolioIndex];
+  currentPortfolioIndex = (index + lightboxItems.length) % lightboxItems.length;
+  const item = lightboxItems[currentPortfolioIndex];
   const img = item.querySelector('img');
 
   lightboxImage.src = item.dataset.image;
-  lightboxImage.alt = img.alt;
+  lightboxImage.alt = img?.alt || 'Работа Ковка Данила';
 }
 
-function openLightbox(item) {
-  const items = visiblePortfolioItems();
-  currentPortfolioIndex = items.indexOf(item);
+function openPortfolioLightbox(items, index = 0) {
+  if (!items.length) return;
+
+  lightboxItems = items;
+  currentPortfolioIndex = index;
   showPortfolioImage(currentPortfolioIndex);
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -125,19 +137,49 @@ function openLightbox(item) {
 function closeLightbox() {
   lightbox.classList.remove('open');
   lightboxImage.src = '';
+  lightboxItems = [];
   document.body.style.overflow = '';
 }
 
+if (portfolioCollage) {
+  portfolioCollage.addEventListener('click', () => {
+    openPortfolioLightbox(portfolioItems, 0);
+  });
+}
+
 portfolioItems.forEach(item => {
-  item.addEventListener('click', () => openLightbox(item));
+  item.addEventListener('click', () => {
+    const categoryItems = portfolioItems.filter(
+      portfolioItem => portfolioItem.dataset.category === item.dataset.category
+    );
+    openPortfolioLightbox(categoryItems, categoryItems.indexOf(item));
+  });
 });
 
 lightboxClose.addEventListener('click', closeLightbox);
 lightboxPrev.addEventListener('click', () => showPortfolioImage(currentPortfolioIndex - 1));
 lightboxNext.addEventListener('click', () => showPortfolioImage(currentPortfolioIndex + 1));
+
 lightbox.addEventListener('click', event => {
   if (event.target === lightbox) closeLightbox();
 });
+
+lightbox.addEventListener('touchstart', event => {
+  touchStartX = event.changedTouches[0]?.clientX ?? null;
+}, { passive: true });
+
+lightbox.addEventListener('touchend', event => {
+  if (touchStartX === null || !lightbox.classList.contains('open')) return;
+
+  const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
+  const distance = touchEndX - touchStartX;
+
+  if (Math.abs(distance) > 45) {
+    showPortfolioImage(currentPortfolioIndex + (distance < 0 ? 1 : -1));
+  }
+
+  touchStartX = null;
+}, { passive: true });
 
 document.addEventListener('keydown', event => {
   if (!lightbox.classList.contains('open')) return;
@@ -145,7 +187,6 @@ document.addEventListener('keydown', event => {
   if (event.key === 'ArrowLeft') showPortfolioImage(currentPortfolioIndex - 1);
   if (event.key === 'ArrowRight') showPortfolioImage(currentPortfolioIndex + 1);
 });
-
 
 
 // Adaptive mobile navigation
