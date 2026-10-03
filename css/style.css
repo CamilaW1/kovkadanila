@@ -642,18 +642,30 @@ h2 {
   display: none;
 }
 
-.portfolio-collage img {
+.portfolio-collage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  gap: 2px;
+  background: #0d0f11;
+}
+
+.portfolio-collage-grid img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
   object-fit: cover;
   transition: transform .35s ease, filter .35s ease;
 }
 
 @media (hover: hover) {
-  .portfolio-collage:hover img {
-    transform: scale(1.015);
+  .portfolio-collage:hover .portfolio-collage-grid img {
+    transform: scale(1.02);
     filter: brightness(1.04);
   }
 }
